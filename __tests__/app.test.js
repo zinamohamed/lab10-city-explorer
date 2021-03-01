@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { formatWeather } = require('../lib/munge-functions.js');
+const { formatWeather, formatYelp } = require('../lib/munge-functions.js');
 
 
 test('gets weather from search params', async() => {
@@ -65,4 +65,35 @@ test('gets weather from search params', async() => {
   expect(data).toEqual(expectation);
 });
 
+test('return requested rest.', async() => {
+
+
+  const expectation = [{
+    name: 'Luc Lac',
+    image_url: 'https://s3-media1.fl.yelpcdn.com/bphoto/azr6sD6VeJbdaiO2aKvSsw/o.jpg',
+    price: '$$',
+    rating: 4.0,
+    url: 'https://www.yelp.com/biz/luc-lac-portland-7?adjust_creative=W4-fw5orI81WMg21PQOASQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=W4-fw5orI81WMg21PQOASQ',
+  }];
+
+  const actualData = {
+    businesses: [
+      {
+        'name': 'Luc Lac',
+        'image_url': 'https://s3-media1.fl.yelpcdn.com/bphoto/azr6sD6VeJbdaiO2aKvSsw/o.jpg',
+        'is_closed': false,
+        'url': 'https://www.yelp.com/biz/luc-lac-portland-7?adjust_creative=W4-fw5orI81WMg21PQOASQ&utm_campaign=yelp_api_v3&utm_medium=api_v3_business_search&utm_source=W4-fw5orI81WMg21PQOASQ',
+        'review_count': 3205,
+        'rating': 4.0,
+        'price': '$$',
+
+      }
+    ]
+  };
+
+  const data = formatYelp(actualData);
+
+
+  expect(data).toEqual(expectation);
+});
 
