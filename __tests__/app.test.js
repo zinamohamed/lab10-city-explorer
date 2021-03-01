@@ -1,6 +1,6 @@
 require('dotenv').config();
 
-const { formatWeather, formatYelp } = require('../lib/munge-functions.js');
+const { formatWeather, formatYelp, formatLocation } = require('../lib/munge-functions.js');
 
 
 test('gets weather from search params', async() => {
@@ -93,6 +93,27 @@ test('return requested rest.', async() => {
 
   const data = formatYelp(actualData);
 
+
+  expect(data).toEqual(expectation);
+});
+
+test('returns city location', async() => {
+
+  const expectation = 
+    {
+      formatted_query: 'Portland, Multnomah, Oregon, USA',
+      latitude: '45.5202471', 
+      longitude: '-97.3233874'
+    };
+
+  const actual = [
+    {
+      lat: '45.5202471',
+      lon: '-97.3233874',
+      display_name: 'Portland, Multnomah, Oregon, USA',
+    }];
+
+  const data = formatLocation(actual);
 
   expect(data).toEqual(expectation);
 });
